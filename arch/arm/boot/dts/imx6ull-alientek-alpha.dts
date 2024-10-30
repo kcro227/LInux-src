@@ -1,0 +1,44 @@
+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+//
+// Copyright (C) 2016 Freescale Semiconductor, Inc.
+
+/dts-v1/;
+
+#include "imx6ull.dtsi"
+#include "imx6ull-alientek-alpha.dtsi"
+
+/ {
+	model = "Alientek Alpha I.MX6ULL";
+	compatible = "fsl,imx6ull-14x14-evk", "fsl,imx6ull";
+
+	backlight {
+	compatible = "pwm-backlight";
+	pwms = <&pwm1 0 5000000>;
+	brightness-levels = <0 4 8 16 32 64 128 255>;
+ 	default-brightness-level = <6>;
+ 	status = "okay";
+
+};
+
+};
+
+&clks {
+	assigned-clocks = <&clks IMX6UL_CLK_PLL3_PFD2>;
+	assigned-clock-rates = <320000000>;
+};
+
+&usdhc2 {
+	pinctrl-name = "default","state_100mhz","state_200mhz";
+	pinctrl-0=<&pinctrl_usdhc2_8bit>;
+	pinctrl-1=<&pinctrl_usdhc2_8bit_100mhz>;
+	pinctrl-2=<&pinctrl_usdhc2_8bit_200mhz>;
+	bus-width = <8>;
+	non-removeable;
+	status = "okay";
+};
+&pwm1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_pwm1>;
+	status = "okay";
+};
+
