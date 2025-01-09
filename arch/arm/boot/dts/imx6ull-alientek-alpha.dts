@@ -1,0 +1,53 @@
+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+//
+// Copyright (C) 2016 Freescale Semiconductor, Inc.
+
+/dts-v1/;
+
+#include "imx6ull.dtsi"
+#include "imx6ull-alientek-alpha.dtsi"
+
+/ {
+	model = "i.MX6 UltraLiteLite Alientek Alpha";
+	compatible = "fsl,imx6ull-alientek-alpha", "fsl,imx6ull";
+	
+	alpha-led {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "atkalpha-gpioled";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_led>;
+		led-gpio = <&gpio1 3 GPIO_ACTIVE_LOW>;
+		reg = <
+		0X020C406C 0X04 /* CCM_CCGR1_BASE */
+		0X020E0068 0X04 /* SW_MUX_GPIO1_IO03_BASE */
+		0X020E02F4 0X04 /* SW_PAD_GPIO1_IO03_BASE */
+		0X0209C000 0X04 /* GPIO1_DR_BASE */
+		0X0209C004 0X04 >;
+		status = "okay";
+		
+	};
+};
+
+&clks {
+	assigned-clocks = <&clks IMX6UL_CLK_PLL3_PFD2>;
+	assigned-clock-rates = <320000000>;
+};
+
+&usdhc2 {
+	pinctrl-name = "default","state_100mhz","state_200mhz";
+	pinctrl-0=<&pinctrl_usdhc2_8bit>;
+	pinctrl-1=<&pinctrl_usdhc2_8bit_100mhz>;
+	pinctrl-2=<&pinctrl_usdhc2_8bit_200mhz>;
+	bus-width = <8>;
+	non-removeable;
+	status = "okay";
+};
+
+&pwm1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_pwm1>;
+	status = "okay";
+};
+
+
